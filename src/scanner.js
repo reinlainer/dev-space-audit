@@ -2,7 +2,7 @@ const { getAllPaths, getPathsByCategory } = require('./paths');
 const { getDirectorySize, pathExists } = require('./utils');
 const fs = require('fs').promises;
 const path = require('path');
-const glob = require('glob');
+const { glob } = require('glob');
 
 /**
  * 스캐너 모듈
@@ -93,7 +93,7 @@ async function scanAllPaths() {
   const allPaths = getAllPaths();
   const results = [];
   
-  console.log('스캔 중...\n');
+  console.log('Scanning...\n');
   
   for (let i = 0; i < allPaths.length; i++) {
     const pathConfig = allPaths[i];

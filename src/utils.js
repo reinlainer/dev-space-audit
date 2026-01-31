@@ -95,9 +95,32 @@ async function isDirectory(path) {
   }
 }
 
+/**
+ * 디렉터리를 재귀적으로 삭제 (Node 14.14 미만 호환용)
+ * @param {string} dirPath - 삭제할 디렉터리 경로
+ */
+async function removeRecursive(dirPath) {
+  const stat = await fs.stat(dirPath);
+  if (stat.isFile()) {
+    await fs.unlink(dirPath);
+    return;
+  }
+  if (stat.isSymbolicLink()) {
+    await fs.unlink(dirPath);
+    return;
+  }
+  const entries = await fs.readdir(dirPath, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dirPath, entry.name);
+    await removeRecursive(fullPath);
+  }
+  await fs.rmdir(dirPath);
+}
+
 module.exports = {
   formatBytes,
   getDirectorySize,
   pathExists,
-  isDirectory
+  isDirectory,
+  removeRecursive
 };

@@ -91,10 +91,10 @@ function formatSummary(results) {
   const existingResults = results.filter(r => r.exists && r.size > 0);
   
   if (existingResults.length === 0) {
-    return '스캔된 개발 도구 관련 저장소가 없습니다.\n';
+    return 'No developer-related storage found.\n';
   }
   
-  let output = '\n=== 요약 ===\n\n';
+  let output = '\n=== Summary ===\n\n';
   
   existingResults.forEach(result => {
     const sizeStr = formatBytes(result.size);
@@ -102,7 +102,7 @@ function formatSummary(results) {
   });
   
   const total = existingResults.reduce((sum, r) => sum + r.size, 0);
-  output += `\n총합: ${formatBytes(total)}\n`;
+  output += `\nTotal: ${formatBytes(total)}\n`;
   
   return output;
 }

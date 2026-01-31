@@ -13,6 +13,7 @@ Ever wondered why your disk doesn't free up even after deleting projects? This t
 - 📈 **Grouped statistics and summaries** - Results organized by category
 - 🎯 **Top 5 largest directories** - Quickly identify the biggest space consumers
 - ⚡ **Fast scanning** - Efficiently analyzes only necessary paths
+- 🗑️ **Optional safe deletion** - Delete only predefined cache paths (whitelist), with confirmation and dry-run
 
 ## 📦 Requirements
 
@@ -38,11 +39,20 @@ npm link
 
 ## 💻 Usage
 
-After installation, run:
+Run the CLI in an interactive terminal; a menu lets you choose an action:
 
 ```bash
 dev-space-audit
 ```
+
+**Flow:**
+
+1. **Main menu:** Scan | Quit (arrow keys + Enter).
+2. **Scan** – Runs one scan, shows disk usage, then **“What next?”**: “Delete caches (choose targets)” | “Back to main menu”.
+3. **Delete caches** – Checkbox list of deletable targets (**no loop**: cursor stops at first/last item). Space to toggle, Enter to confirm. Then confirm deletion (y/N). Same scan data is used (no second scan).
+4. **Quit** – Exit.
+
+The main menu is shown again after each flow. If stdin is not a TTY (e.g. when piping), the program exits with a short message; run without piping.
 
 ### Example Output
 
@@ -106,17 +116,9 @@ Top 5 Largest Directories:
 
 ## 🎯 Philosophy
 
-This tool focuses solely on **observation and awareness**.
-
-- ✅ Clearly shows disk usage
-- ✅ Groups results by tool for easy understanding
-- ✅ Helps developers understand "what is taking up how much space"
-
-**What it does NOT do:**
-- ❌ Automatic deletion
-- ❌ System area cleanup
-- ❌ Require elevated permissions
-- ❌ Real-time monitoring daemon
+- ✅ **Observation first** – Clearly shows disk usage and groups by tool
+- ✅ **Safe deletion** – Delete only whitelisted paths (paths.js), only under home directory, with confirmation and `--dry-run`
+- ✅ No elevated permissions, no system-wide cleanup, no real-time daemon
 
 ## 🤝 Contributing
 
